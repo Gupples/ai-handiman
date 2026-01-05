@@ -5,7 +5,6 @@ import argparse
 from google.genai import types
 
 def main():
-    print("Hello from ai-handiman!")
 
     # Set up LLM
     load_dotenv()
@@ -14,9 +13,10 @@ def main():
         raise RuntimeError("API KEY NOT FOUND!!!")
     client = genai.Client(api_key=api_key)
     
-    # Set up args.user_prompt
+    # Set up args
     parser =  argparse.ArgumentParser(description="Chatbot")
     parser.add_argument("user_prompt", type=str, help="User prompt")
+    parser.add_argument("--verbose", action="store_true", help="Enable verbose output")
     args  = parser.parse_args()
 
     # Process user prompt
@@ -26,8 +26,10 @@ def main():
     # Display resutls
     if response.usage_metadata == None:
         raise RuntimeError("No usage_metadata!!")
-    print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
-    print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
+    if args.verbose:
+        print(f"User prompt: {args.user_prompt}")
+        print(f"Prompt tokens: {response.usage_metadata.prompt_token_count}")
+        print(f"Response tokens: {response.usage_metadata.candidates_token_count}")
     print(response.text)
 
 
