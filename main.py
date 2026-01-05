@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from google import genai
 import argparse
+from google.genai import types
 
 def main():
     print("Hello from ai-handiman!")
@@ -19,7 +20,8 @@ def main():
     args  = parser.parse_args()
 
     # Process user prompt
-    response = client.models.generate_content(model="gemini-2.5-flash", contents=args.user_prompt)
+    messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
+    response = client.models.generate_content(model="gemini-2.5-flash", contents=messages)
 
     # Display resutls
     if response.usage_metadata == None:
