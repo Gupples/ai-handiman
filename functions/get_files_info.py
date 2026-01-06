@@ -20,5 +20,5 @@ def get_files_info(working_directory, directory="."):
             item_info =  f"- {name}: file_size={file_size}, is_dir={is_dir}"
             directory_info.append(item_info)
         except:
-            return f"Error: "
+            return f"Error: Unexpected error with file {item}."
     return "\n".join(directory_info)
