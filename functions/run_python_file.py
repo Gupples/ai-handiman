@@ -18,6 +18,15 @@ def run_python_file(working_directory, file_path, args=None):
         command.extend(args)
         completed_process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True, timeout=30)
 
-
+        results = ""
+        if completed_process.returncode != 0:
+            results += f"Process exited with code {completed_process.returncode}"
+        if (not completed_process.stdout or not completed_process.stderr):
+            results += "No output produced"
+        else:
+            results += f"STDOUT: {completed_process.stdout}"
+            results += f"STDERR: {completed_process.stderr}"
+        return results
+        
     except Exception as e:
         return f"Error: executing python file: {e}"
