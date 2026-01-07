@@ -1,4 +1,4 @@
-from functions import write_file
+from functions.write_file import write_file
 
 results = write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum")
 print(results)
