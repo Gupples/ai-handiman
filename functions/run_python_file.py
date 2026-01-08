@@ -51,6 +51,12 @@ schema_run_python_file = types.FunctionDeclaration(
                 type=types.Type.STRING,
                 description="The file to execute, which may include subdirectories of the working directory",
             ),
+            "args": types.Schema(
+                type=types.Type.ARRAY,
+                description="Any arguments the python file may potentially require",
+                items=types.Schema(type=types.Type.STRING),
+            ),
         },
+        required=["file_path"],
     ),
 )

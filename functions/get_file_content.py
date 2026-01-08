@@ -33,5 +33,6 @@ schema_get_file_content = types.FunctionDeclaration(
                 description="The file to read from, which may include subdirectories of the working directory",
             ),
         },
+        required=["file_path"],
     ),
 )
