@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from google import genai
 import argparse
 from google.genai import types
-from prompts import SYSTEM_PROMPT
+from prompts import SYSTEM_PROMPT, MAX_LOOPS
 from call_function import available_functions, call_function
 
 
@@ -26,7 +26,7 @@ def main():
     args  = parser.parse_args()
     messages = [types.Content(role="user", parts=[types.Part(text=args.user_prompt)])]
 
-    for _ in range(20):
+    for _ in range(MAX_LOOPS):
 
         # Call the model and process user prompt
         response = client.models.generate_content(
@@ -64,7 +64,7 @@ def main():
                     print(f"-> {function_call_result.parts[0].function_response.response}")
             messages.append(types.Content(role="user", parts=function_results))
 
-        if _ == 19:
+        if _ == (MAX_LOOPS - 1):
             print("Error: Ran out of loops!")
             exit(1)
 
