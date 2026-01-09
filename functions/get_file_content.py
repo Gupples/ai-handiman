@@ -1,5 +1,6 @@
 import os
 from google.genai import types
+from config import MAX_CHARS
 
 def get_file_content(working_directory, file_path):
     try:
@@ -13,11 +14,11 @@ def get_file_content(working_directory, file_path):
             return f'Error: File not found or is not a regular file: "{file_path}"'
         
         with open(target_file, "r") as f:
-            file_content = f.read(10000)
+            file_content = f.read(MAX_CHARS)
 
-            # After reading the first 10000 chars...
+            # After reading the first MAX_CHARS chars...
             if f.read(1):
-                file_content += f'[...File "{file_path}" truncated at {10000} characters]'
+                file_content += f'[...File "{file_path}" truncated at {MAX_CHARS} characters]'
     except Exception as e:
         return f"Error reading files: {e}"
     return file_content
